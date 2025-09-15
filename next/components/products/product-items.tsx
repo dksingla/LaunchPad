@@ -9,12 +9,10 @@ export const ProductItems = ({
   heading = 'Popular',
   sub_heading = 'Recently rose to popularity',
   products,
-  locale,
 }: {
   heading?: string;
   sub_heading?: string;
   products: Product[];
-  locale: string;
 }) => {
   return (
     <div className="py-20">
@@ -27,7 +25,6 @@ export const ProductItems = ({
           <ProductItem
             key={'regular-product-item' + product.id}
             product={product}
-            locale={locale}
           />
         ))}
       </div>
@@ -35,16 +32,10 @@ export const ProductItems = ({
   );
 };
 
-const ProductItem = ({
-  product,
-  locale,
-}: {
-  product: Product;
-  locale: string;
-}) => {
+const ProductItem = ({ product }: { product: Product }) => {
   return (
     <Link
-      href={`/${locale}/products/${product.slug}` as never}
+      href={`/products/${product.slug}` as never}
       className="group relative block"
     >
       <div className="relative border border-neutral-800  rounded-md overflow-hidden">

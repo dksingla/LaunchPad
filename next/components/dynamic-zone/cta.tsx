@@ -12,12 +12,10 @@ export const CTA = ({
   heading,
   sub_heading,
   CTAs,
-  locale,
 }: {
   heading: string;
   sub_heading: string;
   CTAs: any[];
-  locale: string;
 }) => {
   return (
     <div className="relative py-40">
@@ -37,7 +35,7 @@ export const CTA = ({
               <Button
                 as={Link}
                 key={index}
-                href={`/${locale}${cta.URL}`}
+                href={cta.URL}
                 variant={cta.variant}
                 className="py-3"
               >

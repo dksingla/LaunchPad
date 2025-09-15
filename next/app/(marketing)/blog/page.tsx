@@ -1,7 +1,6 @@
 import { IconClipboardText } from '@tabler/icons-react';
 import { type Metadata } from 'next';
 
-import ClientSlugHandler from '../ClientSlugHandler';
 import { BlogCard } from '@/components/blog-card';
 import { BlogPostRows } from '@/components/blog-post-rows';
 import { Container } from '@/components/container';
@@ -13,14 +12,10 @@ import { generateMetadataObject } from '@/lib/shared/metadata';
 import fetchContentType from '@/lib/strapi/fetchContentType';
 import { Article } from '@/types/types';
 
-export async function generateMetadata(props: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const params = await props.params;
+export async function generateMetadata(): Promise<Metadata> {
   const pageData = await fetchContentType(
     'blog-page',
     {
-      filters: { locale: params.locale },
       populate: 'seo.metaImage',
     },
     true
@@ -31,36 +26,12 @@ export async function generateMetadata(props: {
   return metadata;
 }
 
-export default async function Blog(props: {
-  params: Promise<{ locale: string; slug: string }>;
-}) {
-  const params = await props.params;
-  const blogPage = await fetchContentType(
-    'blog-page',
-    {
-      filters: { locale: params.locale },
-    },
-    true
-  );
-  const articles = await fetchContentType(
-    'articles',
-    {
-      filters: { locale: params.locale },
-    },
-    false
-  );
-
-  const localizedSlugs = blogPage.localizations?.reduce(
-    (acc: Record<string, string>, localization: any) => {
-      acc[localization.locale] = 'blog';
-      return acc;
-    },
-    { [params.locale]: 'blog' }
-  );
+export default async function Blog() {
+  const blogPage = await fetchContentType('blog-page', {}, true);
+  const articles = await fetchContentType('articles', {}, false);
 
   return (
     <div className="relative overflow-hidden py-20 md:py-0">
-      <ClientSlugHandler localizedSlugs={localizedSlugs} />
       <AmbientColor />
       <Container className="flex flex-col items-center justify-between pb-20">
         <div className="relative z-20 py-10 md:pt-40">
@@ -76,11 +47,7 @@ export default async function Blog(props: {
         </div>
 
         {articles.data.slice(0, 1).map((article: Article) => (
-          <BlogCard
-            article={article}
-            locale={params.locale}
-            key={article.title}
-          />
+          <BlogCard article={article} key={article.title} />
         ))}
 
         <BlogPostRows articles={articles.data} />

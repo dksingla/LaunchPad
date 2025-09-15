@@ -12,7 +12,6 @@ interface DynamicZoneComponent {
 
 interface Props {
   dynamicZone: DynamicZoneComponent[];
-  locale: string;
 }
 
 const componentMapping: { [key: string]: any } = {
@@ -48,7 +47,7 @@ const componentMapping: { [key: string]: any } = {
   ),
 };
 
-const DynamicZoneManager: React.FC<Props> = ({ dynamicZone, locale }) => {
+const DynamicZoneManager: React.FC<Props> = ({ dynamicZone }) => {
   return (
     <div>
       {dynamicZone.map((componentData, index) => {
@@ -61,7 +60,6 @@ const DynamicZoneManager: React.FC<Props> = ({ dynamicZone, locale }) => {
           <Component
             key={`${componentData.__component}-${componentData.id}-${index}`}
             {...componentData}
-            locale={locale}
           />
         );
       })}

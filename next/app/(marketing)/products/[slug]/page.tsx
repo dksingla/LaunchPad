@@ -9,7 +9,7 @@ import { generateMetadataObject } from '@/lib/shared/metadata';
 import fetchContentType from '@/lib/strapi/fetchContentType';
 
 export async function generateMetadata(props: {
-  params: Promise<{ locale: string; slug: string }>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const params = await props.params;
 
@@ -28,7 +28,7 @@ export async function generateMetadata(props: {
 }
 
 export default async function SingleProductPage(props: {
-  params: Promise<{ slug: string; locale: string }>;
+  params: Promise<{ slug: string }>;
 }) {
   const params = await props.params;
 
@@ -50,10 +50,7 @@ export default async function SingleProductPage(props: {
       <Container className="py-20 md:py-40">
         <SingleProduct product={product} />
         {product?.dynamic_zone && (
-          <DynamicZoneManager
-            dynamicZone={product?.dynamic_zone}
-            locale={params.locale}
-          />
+          <DynamicZoneManager dynamicZone={product?.dynamic_zone} />
         )}
       </Container>
     </div>

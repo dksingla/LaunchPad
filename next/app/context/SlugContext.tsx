@@ -1,38 +1,12 @@
 'use client';
 
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext } from 'react';
 
-type State = {
-  localizedSlugs: Record<string, string>;
-};
-
-type Action = {
-  type: 'SET_SLUGS';
-  payload: Record<string, string>;
-};
-
-const SlugContext = createContext<{
-  state: State;
-  dispatch: React.Dispatch<Action>;
-} | null>(null);
-
-const slugReducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case 'SET_SLUGS':
-      return { ...state, localizedSlugs: action.payload };
-    default:
-      return state;
-  }
-};
+// Simplified context - can be removed entirely if not needed elsewhere
+const SlugContext = createContext<{} | null>({});
 
 export const SlugProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(slugReducer, { localizedSlugs: {} });
-
-  return (
-    <SlugContext.Provider value={{ state, dispatch }}>
-      {children}
-    </SlugContext.Provider>
-  );
+  return <SlugContext.Provider value={{}}>{children}</SlugContext.Provider>;
 };
 
 export const useSlugContext = () => {

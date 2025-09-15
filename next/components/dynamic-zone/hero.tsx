@@ -15,12 +15,10 @@ export const Hero = ({
   heading,
   sub_heading,
   CTAs,
-  locale,
 }: {
   heading: string;
   sub_heading: string;
   CTAs: any[];
-  locale: string;
 }) => {
   return (
     <div className="h-screen overflow-hidden relative flex flex-col items-center justify-center">
@@ -48,7 +46,7 @@ export const Hero = ({
             <Button
               key={cta?.id}
               as={Link}
-              href={`/${locale}${cta.URL}`}
+              href={cta.URL}
               {...(cta.variant && { variant: cta.variant })}
             >
               {cta.text}

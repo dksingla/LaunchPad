@@ -3,13 +3,7 @@ import React from 'react';
 
 import { Logo } from '@/components/logo';
 
-export const Footer = async ({
-  data,
-  locale,
-}: {
-  data: any;
-  locale: string;
-}) => {
+export const Footer = async ({ data }: { data: any }) => {
   return (
     <div className="relative">
       <div className="border-t border-neutral-900 px-8 pt-20 pb-32 relative bg-primary">
@@ -63,9 +57,9 @@ export const Footer = async ({
             </div>
           </div>
           <div className="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
-            <LinkSection links={data?.internal_links} locale={locale} />
-            <LinkSection links={data?.policy_links} locale={locale} />
-            <LinkSection links={data?.social_media_links} locale={locale} />
+            <LinkSection links={data?.internal_links} />
+            <LinkSection links={data?.policy_links} />
+            <LinkSection links={data?.social_media_links} />
           </div>
         </div>
       </div>
@@ -75,17 +69,15 @@ export const Footer = async ({
 
 const LinkSection = ({
   links,
-  locale,
 }: {
   links: { text: string; URL: never | string }[];
-  locale: string;
 }) => (
   <div className="flex justify-center space-y-4 flex-col mt-4">
     {links.map((link) => (
       <Link
         key={link.text}
         className="transition-colors hover:text-neutral-400 text-muted text-xs sm:text-sm"
-        href={`${link.URL.startsWith('http') ? '' : `/${locale}`}${link.URL}`}
+        href={link.URL}
       >
         {link.text}
       </Link>
